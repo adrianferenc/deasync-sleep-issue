@@ -1,4 +1,8 @@
+// The following test should have goodTest run for 2*time milliseconds. The while loop should run 
+// require("deasync").sleep(time) twice before the badTest timeout is cleared.
 
+// However, on occasion (not sure when), the badTest will not be cleared and errorCount will increase 
+// by 1. I added a latencyBuffer of at least 1 second so it is not due to processing latency.
 
 const time = 200;
 const tests = 100;
@@ -11,9 +15,9 @@ for (let i = 0; i < tests; i++) {
   let badTest = setTimeout(function () {
     tester.error = true;
     tester.switch = true;
-  }, 2 * time + Math.max(latencyBuffer,.5 * time));
+  }, 2 * time + Math.max(latencyBuffer, 0.5 * time));
 
-  setTimeout(function () {
+  let goodTest = setTimeout(function () {
     tester.switch = true;
   }, 2 * time);
 
@@ -28,5 +32,9 @@ for (let i = 0; i < tests; i++) {
   }
 }
 console.log(
-  `Running ${tests} test${tests !== 1 ? "s" : ""}, the second setTimeout did not clear ${errorCount} time${errorCount !== 1 ? "s" : ""}.`
+  `Running ${tests} test${
+    tests !== 1 ? "s" : ""
+  }, the second setTimeout did not clear ${errorCount} time${
+    errorCount !== 1 ? "s" : ""
+  }.`
 );
