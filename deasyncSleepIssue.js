@@ -4,6 +4,9 @@
 // However, on occasion (not sure when), the badTest will not be cleared and errorCount will increase 
 // by 1. I added a latencyBuffer of at least 1 second so it is not due to processing latency.
 
+//Run 'npm -i deasync' initially
+
+
 const time = 200;
 const tests = 100;
 const latencyBuffer = 1000;
