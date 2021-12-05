@@ -12,6 +12,8 @@ const tests = 100;
 const latencyBuffer = 1000;
 let errorCount = 0;
 
+console.log(`This should take about ${time*tests/1000} seconds`);
+
 for (let i = 0; i < tests; i++) {
   const tester = { switch: false, error: false };
 
